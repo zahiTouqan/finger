@@ -15,13 +15,13 @@ import (
 func main() {
 	database := finger.NewUserDatabase()
 
-	l, err := net.Listen("tcp", ":8080")
+	l, err := net.Listen("tcp", ":79")
 	if err != nil {
-		log.Fatalf("failed to listen to TCP port 8080: %v", err)
+		log.Fatalf("failed to listen to TCP port 79: %v", err)
 	}
 	defer l.Close()
 
-	log.Println("listening on port 8080")
+	log.Println("listening on port 79")
 
 	for {
 		conn, err := l.Accept()
@@ -190,14 +190,14 @@ func forwardQuery(username string, host string, verbose bool) (string, error) {
 }
 
 func parseArgs(args []byte) ([]string, error) {
-	fmt.Println("Started parsing args")
+	log.Printf("Parsing the arguments from %s", string(args))
 	var actualArgs []string
 	if args == nil {
-		log.Printf("Arguments are empty")
+		//log.Printf("Arguments are empty")
 		return nil, errors.New("query arguments are empty")
 	} else if string(args[len(args)-2:]) != "\r\n" {
-		log.Printf("Command must end with <CRLF>")
-		return nil, errors.New("command must end with CRLF")
+		//log.Printf("Command must end with <CRLF>")
+		return nil, errors.New("command must end with <CRLF>")
 	} else {
 		args = args[:len(args)-2]
 		lastSpace := -1
