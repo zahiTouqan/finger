@@ -30,6 +30,3 @@ steps:
     commands:
       - cd terraform
       - terraform apply -auto-approve tfplan
-    when:
-      branch: master
-      event: push
