@@ -31,5 +31,5 @@ steps:
       - cd terraform
       - terraform apply -auto-approve tfplan
     when:
-      branch: main
+      branch: master
       event: push
