@@ -63,5 +63,4 @@ resource "docker_container" "client_container" {
         volume_name = docker_volume.finger_data.name
         container_path = "/app/data/client"
     }
-
 }
