@@ -34,7 +34,7 @@ resource "docker_container" "server_container" {
     image = docker_image.server_image.name
     restart = "unless-stopped"
 
-    network_advanced {
+    networks_advanced {
         name = docker_network.private_network.name
     }
     
@@ -53,8 +53,9 @@ resource "docker_container" "client_container" {
     name = "client"
     image = docker_image.client_image.name
     restart = "unless-stopped"
+    env = ["SERVER_HOST=server"]
 
-    network_advanced {
+    networks_advanced {
         name = docker_network.private_network.name
     }
 
@@ -63,7 +64,4 @@ resource "docker_container" "client_container" {
         container_path = "/app/data/client"
     }
 
-    environment = [
-        "SERVER_HOST=sever"
-    ]
 }
