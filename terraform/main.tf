@@ -13,10 +13,16 @@ provider "docker" {
 
 resource "docker_network" "private_network" {
     name = "finger-network"
+    lifecycle {
+        create_before_destroy = true
+     }
 }
 
 resource "docker_volume" "finger_data" {
     name = "finger-data"
+    lifecycle {
+      prevent_destroy = false
+    }
 }
 
 resource "docker_image" "server_image" {
@@ -47,6 +53,10 @@ resource "docker_container" "server_container" {
         volume_name = docker_volume.finger_data.name
         container_path = "/app/data/server"
     }
+
+    lifecycle {
+        ignore_changes = [ name ]
+    }
 }
 
 resource "docker_container" "client_container" {
@@ -62,5 +72,9 @@ resource "docker_container" "client_container" {
     volumes {
         volume_name = docker_volume.finger_data.name
         container_path = "/app/data/client"
+    }
+
+    lifecycle {
+      ignore_changes = [ name ]
     }
 }
