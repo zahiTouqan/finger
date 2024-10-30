@@ -1,3 +1,7 @@
+when:
+  - event: push
+    branch: master
+
 steps:
   build:
     image: docker:dind
