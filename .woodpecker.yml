@@ -1,0 +1,35 @@
+pipeline:
+  build:
+    image: docker:dind
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker build -f cmd/server/Dockerfile -t finger-server .
+      - docker build -f cmd/client/Dockerfile -t finger-client .
+
+  terraform_init:
+    image: hashicorp/terraform:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - cd terraform
+      - terraform init
+
+  terraform_plan:
+    image: hashicorp/terraform:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - cd terraform
+      - terraform plan -out=tfplan
+
+  terraform_apply:
+    image: hashicorp/terraform:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - cd terraform
+      - terraform apply -auto-approve tfplan
+    when:
+      branch: main
+      event: push
