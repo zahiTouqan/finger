@@ -45,8 +45,8 @@ resource "docker_container" "server_container" {
     }
     
     ports {
-        internal = 79
-        external = 79
+        internal = 8010
+        external = 8010
     }
 
     volumes {

@@ -9,5 +9,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /server ./cmd/server
 FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /server .
-EXPOSE 79
-CMD ["./server"]
+EXPOSE 8010
+ENTRYPOINT ["./server"]

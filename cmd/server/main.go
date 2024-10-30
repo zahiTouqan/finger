@@ -15,13 +15,14 @@ import (
 func main() {
 	database := finger.NewUserDatabase()
 
-	l, err := net.Listen("tcp", ":79")
+	port := ":8010"
+	l, err := net.Listen("tcp", port)
 	if err != nil {
-		log.Fatalf("failed to listen to TCP port 79: %v", err)
+		log.Fatalf("failed to listen to TCP port %s: %v", port, err)
 	}
 	defer l.Close()
 
-	log.Println("listening on port 79")
+	log.Printf("listening on port %s\n", port)
 
 	for {
 		conn, err := l.Accept()
